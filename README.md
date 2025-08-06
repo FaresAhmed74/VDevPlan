@@ -1,7 +1,7 @@
 
 #  AWS Cloud Learning Notes
 
-This repository contains my structured notes and summaries as I study AWS Cloud concepts, with the aim of sharing knowledge and helping others learn more effectively.
+This repository contains my structured notes and summaries as I study AWS Cloud concepts, with the aim of sharing knowledge and helping others learn more effectively. [Course Link](https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials)
 
 ---
 
