@@ -10,7 +10,7 @@ jobs:
           - name: run script
             run: |
                chmod +x add-script.sh
-               ./add-script.sh   
+               ./add-script.sh
 
         #   - name: Welcome message
         #     run: echo "Welcome to my first workflow"
