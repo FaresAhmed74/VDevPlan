@@ -6,15 +6,20 @@ jobs:
         steps:
           - name: Checkout repo using actions
             uses: actions/checkout@v4
-            
-          - name: Welcome message
-            run: echo "Welcome to my first workflow"
+           
+          - name: run script
+            run: |
+               chmod +x add-script.sh
+               ./add-script.sh   
+
+        #   - name: Welcome message
+        #     run: echo "Welcome to my first workflow"
           
-          - name: list all files
-            run: ls -l 
+        #   - name: list all files
+        #     run: ls -l 
           
-          - name: Read the readme fil
-            run: cat README.md  
+        #   - name: Read the readme fil
+        #     run: cat README.md  
   
 
 
