@@ -1,0 +1,21 @@
+name: First workflow
+on: push
+jobs:
+    First_job:
+        runs-on: ubuntu-22.04
+        steps:
+          - name: Checkout repo using actions
+            uses: actions/checkout@v4
+            
+          - name: Welcome message
+            run: echo "Welcome to my first workflow"
+          
+          - name: list all files
+            run: ls -l 
+          
+          - name: Read the readme fil
+            run: cat README.md  
+  
+
+
+  
