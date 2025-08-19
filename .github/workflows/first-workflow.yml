@@ -1,26 +1,25 @@
-name: First workflow
-on: push
+name: solar-system workflow
+on: 
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+  #     - 'feature/*'  
+
 jobs:
-    First_job:
-        runs-on: ubuntu-22.04
-        steps:
-          - name: Checkout repo using actions
-            uses: actions/checkout@v4
-           
-          - name: run script
-            run: |
-               chmod +x add-script.sh
-               ./add-script.sh
+   unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18
+      
+      - name: install npm
+        run: npm install  
 
-        #   - name: Welcome message
-        #     run: echo "Welcome to my first workflow"
-          
-        #   - name: list all files
-        #     run: ls -l 
-          
-        #   - name: Read the readme fil
-        #     run: cat README.md  
-  
-
-
-  
+      - name: unit testing
+        run: npm test
