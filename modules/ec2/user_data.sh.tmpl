@@ -1,0 +1,43 @@
+#!/bin/bash
+set -xe
+
+export DEBIAN_FRONTEND=noninteractive
+
+# Update & install packages
+apt-get update -y
+apt-get install -y nginx mysql-client awscli jq
+
+# Simple web page
+cat >/var/www/html/index.html <<'HTML'
+<!DOCTYPE html>
+<html>
+  <head><meta charset="utf-8"><title>Hello</title></head>
+  <body style="font-family: sans-serif; text-align:center; margin-top: 60px;">
+    <h1>Hello from ${name}</h1>
+    <h2>This Fares ElDesouky</h2>
+    <p>Date: ${today}</p>
+  </body>
+</html>
+HTML
+
+systemctl enable nginx
+systemctl restart nginx
+
+# Fetch DB credentials from Secrets Manager
+SECRET=$(aws secretsmanager get-secret-value --secret-id "${secret_arn}" --region "${region}" | jq -r '.SecretString')
+DBUSER=$(echo "$SECRET" | jq -r '.username')
+DBPASS=$(echo "$SECRET" | jq -r '.password')
+
+# Create table and insert test row
+mysql -h "${rds_endpoint}" -u "$DBUSER" -p"$DBPASS" -D "${db_name}" -e "
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(64),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO users (name) VALUES ('userdata-insert-ok');
+"
+
+# Test S3 read/write
+echo "hello from $(hostname)" >/tmp/hello.txt
+aws s3 cp /tmp/hello.txt "s3://${bucket_name}/hello-$(date +%s).txt" --region "${region}" || true
