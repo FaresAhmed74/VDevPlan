@@ -1,286 +1,169 @@
-
-
-
-##  What is DevOps?
-**DevOps** is a set of practices that combines **software development (Dev)** and **IT operations (Ops)** to shorten the development lifecycle and deliver high-quality software continuously.  
-It emphasizes collaboration, automation, and continuous delivery.
-
----
-
-##  Challenges DevOps Teams Try to Solve
-
-1. **Miscommunications & Lack of Collaboration**  
-   - Developers and operations teams often work in silos, leading to misunderstandings and delays.
-
-2. **Conflict of Interest**  
-   - Developers aim to implement new features quickly.  
-   - Operations prioritize maintaining system stability.  
-   - This can cause friction without a shared goal.
-
-3. **Security**  
-   - Integrating security into the development process (**DevSecOps**) to ensure vulnerabilities are addressed early.
-
-4. **Application Testing**  
-   - Slow or inefficient testing can delay releases; DevOps promotes automated testing.
-
-5. **Manual Work**  
-   - Manual deployments, monitoring, and scaling can be error-prone; DevOps promotes automation.
-
----
-
- **Key Idea**: DevOps bridges the gap between development and operations through culture, processes, and tools.
-
-
-#  AWS Cloud Learning Notes
-
-This repository contains my structured notes and summaries as I study AWS Cloud concepts, with the aim of sharing knowledge and helping others learn more effectively. [Course Link](https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials)
-
----
-
-<details>
-<summary>✅ Six Key Benefits of the AWS Cloud</summary>
-
-1. **Trade Fixed Expense for Variable Expense**  
-   Instead of investing heavily in data centers and servers before you know how they’ll be used, pay only when you consume computing resources.
-
-2. **Benefit from Massive Economies of Scale**  
-   AWS aggregates usage across millions of customers, which lowers the cost for you.
-
-3. **Stop Guessing Capacity**  
-   Scale your infrastructure up or down based on actual usage, avoiding over-provisioning or under-provisioning.
-
-4. **Increase Speed and Agility**  
-   Deploy new resources in minutes, enabling faster experimentation and innovation.
-
-5. **Stop Spending Money to Run and Maintain Data Centers**  
-   Focus on business differentiation instead of infrastructure management.
-
-6. **Go Global in Minutes**  
-   Deploy applications in multiple regions around the world with just a few clicks.
-
-</details>
-
-<details>
-<summary>✅ AWS Regions and Availability Zones</summary>
-
-### AWS Regions
-An **AWS Region** is a physical location in the world where AWS has multiple data centers. Each region is a separate geographic area that enables customers to deploy applications close to their users, improving latency and compliance.
-
-### Availability Zones (AZs)
-An **Availability Zone** is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region. Regions typically have multiple AZs.
-
-Using multiple AZs allows you to design highly available and fault-tolerant applications by distributing workloads across isolated infrastructures.
-
-</details>
-
-<details>
-<summary>✅ High Availability vs Fault Tolerance</summary>
-
-### High Availability
-High availability ensures that your application remains accessible and operational **with minimal downtime**, even during failures. It is typically achieved by distributing resources across multiple Availability Zones or regions.
-
-**Benefits:**
-- Minimizes downtime
-- Improves user experience
-- Reduces business impact from failures
-
-### Fault Tolerance
-Fault tolerance is the ability of a system to **continue operating without interruption**, even if one or more components fail.
-
-**Benefits:**
-- Zero downtime during failures
-- Maintains operations seamlessly
-- Suitable for critical systems
-
-</details>
-
-<details>
-<summary>✅ Amazon EC2 and Multitenancy</summary>
-
-### Amazon EC2 (Elastic Compute Cloud)
-Amazon EC2 provides scalable virtual servers in the cloud. You can launch and manage servers, known as **instances**, to run your applications.
-
-- Fully customizable (OS, storage, instance type)
-- Easily scalable
-- Pay-as-you-go pricing
-
-### Multitenancy in EC2
-**Multitenancy** means that multiple customers share the same physical hardware, while their environments remain isolated.
-
-**Security in Multitenancy**:
-- AWS uses hypervisors to isolate virtual machines
-- Data is separated and encrypted
-- Tenants can't access each other’s resources
-
-</details>
-
-<details>
-<summary>✅ EC2 Instance Types and Use Cases</summary>
-
-AWS provides different types of EC2 instances, each optimized for specific workloads.
-
-### 🟦 1. General Purpose
-- **Instance Families**: `t4g`, `t3`, `m6g`, `m5`
-- **Use Case**: Balanced compute, memory, and networking
-- **Examples**: Web servers, development/test environments, small databases
-
-### 🟥 2. Compute Optimized
-- **Instance Families**: `c6g`, `c5`
-- **Use Case**: High-performance compute tasks
-- **Examples**: Batch processing, gaming servers, high-performance web apps
-
-### 🟩 3. Memory Optimized
-- **Instance Families**: `r6g`, `r5`, `x1`
-- **Use Case**: Memory-intensive workloads
-- **Examples**: In-memory databases (e.g., Redis), real-time big data analytics
-
-### 🟨 4. Accelerated Computing
-- **Instance Families**: `p4`, `inf1`, `g4`
-- **Use Case**: Hardware acceleration (GPU, FPGA)
-- **Examples**: Machine learning, deep learning, video processing
-
-### 🟫 5. Storage Optimized
-- **Instance Families**: `i3`, `d2`, `h1`
-- **Use Case**: High-speed, high-capacity storage
-- **Examples**: Data warehousing, Hadoop, NoSQL databases
-
-</details>
-
-<details>
-<summary>✅ AWS EC2 Pricing Models</summary>
-
-### 1. On-Demand Instances
-- Pay for compute capacity by the second or hour with no long-term commitments.
-- **Best for**: Short-term, unpredictable workloads.
-
-### 2. Savings Plans
-- Commit to a consistent amount of usage (e.g., $10/hour) for 1 or 3 years in exchange for lower rates.
-- More flexible than reserved instances.
-
-### 3. Reserved Instances
-- Reserve capacity for 1 or 3 years with up to 75% discount compared to on-demand.
-- **Best for**: Predictable workloads.
-
-### 4. Spot Instances
-- Purchase unused EC2 capacity at discounts up to 90%.
-- **Best for**: Fault-tolerant and flexible applications (e.g., batch jobs, ML training).
-
-### 5. Dedicated Hosts
-- Physical servers dedicated for your use.
-- **Best for**: Compliance requirements, software licenses bound to physical cores.
-
-</details>
-
-<details>
-<summary>✅ EC2 Scaling: Up, Out, and Auto Scaling Groups</summary>
-
-### Vertical Scaling (Scaling Up/Down)
-- **Scale Up**: Increase instance size (e.g., from `t3.small` to `t3.large`)
-- **Scale Down**: Decrease instance size
-- **Best for**: Applications that are difficult to distribute
-
-### Horizontal Scaling (Scaling Out/In)
-- **Scale Out**: Add more instances to handle increased load
-- **Scale In**: Remove instances when load decreases
-- **Best for**: Stateless applications and distributed systems
-
-### Auto Scaling Groups (ASG)
-ASGs automatically manage the number of EC2 instances based on demand.
-
-- **Minimum Capacity**: The least number of instances to always keep running
-- **Desired Capacity**: The ideal number based on current usage
-- **Maximum Capacity**: The upper limit of instances that can be launched
-
-</details>
-
-<details>
-<summary>✅ Load Balancing Algorithms</summary>
-
-Load balancing helps distribute traffic across multiple servers to improve availability and performance. AWS offers **Elastic Load Balancing (ELB)** with several algorithm strategies:
-
-### 1. Round Robin
-- Requests are distributed **evenly** across all available servers in order.
-- **Best for**: Servers with similar capacity and workload.
-
-### 2. Least Connections
-- New requests go to the server with the **fewest active connections**.
-- **Best for**: Long-lived or uneven session workloads.
-
-### 3. IP Hash
-- Assigns requests to servers based on the client's **IP address**.
-- **Best for**: Sticky sessions (same user goes to the same server).
-
-### 4. Least Response Time
-- Sends traffic to the server with the **fastest response time** and fewest active connections.
-- **Best for**: Latency-sensitive applications.
-
-</details>
-
-<details>
-<summary>✅ Amazon SQS vs Amazon SNS</summary>
-
-### Amazon SQS (Simple Queue Service)
-- **Type**: Message Queue (Pull-based)
-- **Use Case**: Decouples components in a distributed system by using a queue for storing messages.
-- **How it works**: 
-  - A producer sends messages to a queue.
-  - Consumers poll the queue to retrieve and process messages.
-
-**Best for**:
-- Asynchronous communication between microservices
-- Load leveling and task queues
-
----
-
-### Amazon SNS (Simple Notification Service)
-- **Type**: Pub/Sub (Push-based)
-- **Use Case**: Sends notifications or messages to multiple subscribers (e.g., email, SMS, Lambda, SQS).
-
-**How it works**:
-- A publisher sends a message to a topic.
-- All subscribers to that topic receive the message instantly.
-
-**Best for**:
-- Sending alerts or notifications
-- Fan-out message delivery
-
-</details>
-<details>
-<summary>✅ Serverless and AWS Lambda</summary>
-
-##  What is Serverless?
-
-Serverless computing allows you to **build and run applications without managing servers**. It abstracts the infrastructure layer, so you can focus entirely on your code.
-
-**Benefits:**
-- No server management
-- Automatic scaling
-- Pay-per-use pricing (you only pay for the compute time you use)
-- Faster development and deployment
-
----
-
-## 🧠 AWS Lambda
-
-**AWS Lambda** is the most popular serverless compute service in AWS.
-
-### 🔧 How it works:
-- Upload your code.
-- Set a trigger (e.g., HTTP request, S3 file upload, DynamoDB change).
-- Lambda runs your code in response to the event.
-
-### ✅ Key Features:
-- Supports multiple languages (Python, Node.js, Java, etc.)
-- Automatic scaling
-- Integrated with other AWS services (S3, DynamoDB, API Gateway, etc.)
-- Max execution time per invocation: 15 minutes
-
-### 🪄 Common Use Cases:
-- Building APIs with API Gateway + Lambda
-- Real-time file processing from S3
-- Automation (e.g., scheduled cleanup jobs)
-- Event-driven microservices
-</details>
-
-
+#  AWS Multi-Tier Web Application Infrastructure
+
+##  Project Overview
+
+This project deploys a production-ready, multi-tier web application infrastructure on AWS using Terraform. The architecture follows AWS best practices for high availability, security, and scalability.
+
+
+
+##  Services & Components
+
+### **1. Networking Layer (VPC Module)**
+- **VPC**: `10.0.0.0/16` CIDR block
+- **Public Subnets**: `10.0.1.0/24` (us-east-1a), `10.0.2.0/24` (us-east-1b)
+- **Private Subnets**: `10.0.3.0/24` (us-east-1a), `10.0.4.0/24` (us-east-1b)
+- **Internet Gateway**: Provides internet access to public subnets
+- **NAT Gateway**: Enables private subnet resources to access internet
+- **Route Tables**: Separate routing for public and private subnets
+
+### **2. Compute Layer (EC2 Module)**
+- **Auto Scaling Group**: 2-4 EC2 instances based on CPU utilization
+- **Launch Template**: Ubuntu 22.04 LTS with custom user data
+- **Load Balancer**: Application Load Balancer (ALB) with health checks
+- **Security Groups**: HTTP (80), SSH (22) 
+- **Instance Type**: t3.micro
+
+### **3. Database Layer (RDS Module)**
+- **Database Engine**: MySQL 8.0
+- **Instance Class**: db.t3.micro
+- **Storage**: 20GB GP2 storage
+- **Multi-AZ**: Currently disabled (can be enabled for production) cost saving
+- **Security**: Private subnet placement with security groups
+
+### **4. Storage Layer (S3 Module)**
+- **Bucket**: Product images and file storage
+- **Versioning**: Enabled for data protection
+- **Encryption**: Server-side encryption (AES256)
+- **Access Control**: Private bucket with IAM-based access
+
+### **5. Security & Access (IAM Module)**
+- **EC2 Role**: Allows EC2 instances to access S3 and Secrets Manager
+- **S3 Policy**: Read/Write access to specific bucket
+- **Secrets Policy**: Read access to database credentials
+- **Instance Profile**: Attached to EC2 instances
+
+### **6. Secrets Management**
+- **AWS Secrets Manager**: Stores database credentials securely
+- **Auto-rotation**: Can be enabled for production
+- **Access Control**: Only EC2 instances can retrieve credentials
+
+##  Service Communication Flow
+
+### **1. External Traffic Flow**
+```
+Internet → ALB → EC2 Instances
+```
+
+### **2. Database Communication**
+```
+EC2 Instances → RDS Security Group → RDS MySQL Database
+Credentials: Retrieved from Secrets Manager via IAM role
+```
+
+### **3. Storage Communication**
+```
+EC2 Instances → IAM Role → S3 Bucket (Read/Write)
+Policy: S3 bucket policy restricts access to EC2 instances only
+```
+
+### **4. Internal Service Communication**
+```
+EC2 Instances → NAT Gateway → Internet (for updates, packages)
+EC2 Instances → VPC Endpoints → AWS Services (S3, Secrets Manager)
+```
+
+##  Security Features
+
+### **Network Security**
+- **VPC Isolation**: Complete network isolation
+- **Security Groups**: Stateful firewall rules
+- **Private Subnets**: Database and internal services
+- **NAT Gateway**: Controlled internet access for private resources
+
+### **Access Control**
+- **IAM Roles**: Least privilege access principle
+- **S3 Bucket Policies**: Restrictive access control
+- **Secrets Manager**: Secure credential storage
+- **SSH Access**: Restricted to specific IP addresses
+
+### **Data Protection**
+- **Encryption at Rest**: S3 and RDS encryption
+- **Versioning**: S3 bucket versioning enabled
+- **Backup**: Automated RDS backups
+
+##  Monitoring & Observability
+
+### **Current Monitoring**
+- **ALB Health Checks**: HTTP health checks on EC2 instances
+- **Auto Scaling**: CPU-based scaling (50% threshold)
+- **Security Group Logging**: VPC Flow Logs capability
+
+### **Recommended Additions**
+- **CloudWatch Dashboards**: Custom metrics and alarms
+- **X-Ray Tracing**: Distributed tracing for requests
+- **CloudWatch Logs**: Centralized logging
+- **SNS Notifications**: Alert notifications
+
+##  Deployment Instructions
+
+### **Prerequisites**
+1. **AWS CLI** installed and configured
+2. **Terraform** version >= 1.5.0
+3. **SSH Key Pair** created in AWS
+4. **AWS Credentials** with appropriate permissions
+
+
+
+### **Step 1: Clone and Navigate**
+```bash
+git clone <your-repository>
+cd AWS-Task2
+```
+
+### **Step 2: Configure Variables (Optional)**
+Edit `variables.tf` to customize:
+- AWS region
+- VPC CIDR block
+- Instance types
+- Database configuration
+- Project name
+
+### **Step 3: Initialize Terraform**
+```bash
+terraform init
+```
+
+### **Step 4: Plan Deployment**
+```bash
+terraform plan
+```
+
+### **Step 5: Deploy Infrastructure**
+```bash
+terraform apply
+```
+
+### **Step 6: Verify Deployment**
+```bash
+# Get ALB DNS name
+terraform output alb_dns_name
+
+# Get RDS endpoint
+terraform output rds_endpoint
+
+# Get S3 bucket name
+terraform output s3_bucket
+```
+
+### **Step 7: Test Application**
+1. **Web Application**: Visit ALB DNS name in browser
+2. **Database Connection**: SSH to EC2 instance and test MySQL connection
+3. **S3 Access**: Verify file upload/download from EC2 instances
+
+##  Cleanup Instructions
+
+### **Destroy Infrastructure**
+```bash
+terraform destroy
+```
 
