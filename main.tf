@@ -51,7 +51,7 @@ module "ec2" {
   rds_endpoint     = module.rds.rds_endpoint
   secret_arn       = module.rds.secret_arn
   s3_bucket_name   = module.s3.bucket_name
-  region           = var.aws_region  # Add this line
+  region           = var.aws_region # Add this line
   depends_on       = [module.iam, module.rds, module.s3]
   tags             = local.tags
 }

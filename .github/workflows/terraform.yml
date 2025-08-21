@@ -1,8 +1,8 @@
 name: Terraform CI/CD
 on:
- workflow_dispatch:    
-#  push:
-#     branches: aws-terraform
+#  workflow_dispatch:    
+ push:
+    
 
 jobs:   
     terraform:
