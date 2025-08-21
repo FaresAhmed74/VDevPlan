@@ -1,6 +1,6 @@
 # Secret for DB credentials
 resource "aws_secretsmanager_secret" "db" {
-  name = "${var.project_name}-db-credentials-v5"
+  name = "${var.project_name}-db-credentials-v5.5"
 }
 
 resource "aws_secretsmanager_secret_version" "db" {

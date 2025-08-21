@@ -26,19 +26,19 @@ resource "aws_s3_bucket_public_access_block" "block" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket" "mybucket" {
-  bucket = "terraform--fareseldesouky2002--remoteserver"
-}
+# resource "aws_s3_bucket" "mybucket" {
+#   bucket = "terraform--fareseldesouky2002--remoteserver"
+# }
 # DynamoDB table for Terraform state locking
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-state-locking"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
+# resource "aws_dynamodb_table" "terraform_locks" {
+#   name         = "terraform-state-locking"
+#   billing_mode = "PAY_PER_REQUEST"
+#   hash_key     = "LockID"
 
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
+#   attribute {
+#     name = "LockID"
+#     type = "S"
+#   }
 
 
-}
+//}
