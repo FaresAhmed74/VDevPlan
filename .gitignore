@@ -1,0 +1,19 @@
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform provider binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Local .terraform directories
+**/.terraform/*
