@@ -1,4 +1,4 @@
-name: EKS Infra & App
+name: EKS Infra
 
 on:
   pull_request:
