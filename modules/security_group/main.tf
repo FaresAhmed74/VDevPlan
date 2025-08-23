@@ -30,10 +30,10 @@ resource "aws_security_group" "eks_worker_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "Allow inbound traffic from control plane"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    description     = "Allow inbound traffic from control plane"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
     security_groups = [aws_security_group.eks_control_plane_sg.id]
   }
 

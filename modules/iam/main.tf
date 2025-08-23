@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks_cluster_role" {
-  name = "${var.cluster_name}-eks-cluster-role"
+  name               = "${var.cluster_name}-eks-cluster-role"
   assume_role_policy = data.aws_iam_policy_document.eks_assume_role.json
 }
 
@@ -19,7 +19,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
 }
 
 resource "aws_iam_role" "eks_node_role" {
-  name = "${var.cluster_name}-eks-node-role"
+  name               = "${var.cluster_name}-eks-node-role"
   assume_role_policy = data.aws_iam_policy_document.node_assume_role.json
 }
 

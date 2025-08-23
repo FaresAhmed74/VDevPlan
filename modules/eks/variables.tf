@@ -19,7 +19,7 @@ variable "private_subnet_ids" {
 }
 
 variable "node_instance_type" {
-  type        = string
+  type = string
   #default     = "t3.small"
   description = "EC2 instance type for worker nodes"
 }
