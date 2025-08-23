@@ -5,7 +5,7 @@
 **DevOps** is a set of practices that combines **software development (Dev)** and **IT operations (Ops)** to shorten the development lifecycle and deliver high-quality software continuously.  
 It emphasizes collaboration, automation, and continuous delivery.
 
----
+-----
 
 ##  Challenges DevOps Teams Try to Solve
 
