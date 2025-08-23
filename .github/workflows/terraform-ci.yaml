@@ -1,0 +1,79 @@
+name: EKS Infra & App
+
+on:
+  pull_request:
+    branches: ["**"]
+  push:
+    branches: ["main"]
+
+env:
+  TF_IN_AUTOMATION: "true"
+  AWS_REGION:  'us-east-1' 
+
+jobs:
+  pr-checks:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Install kube-linter
+        run: |
+          curl -L "https://github.com/stackrox/kube-linter/releases/latest/download/kube-linter-linux.tar.gz" -o kube-linter.tar.gz
+          tar -xzf kube-linter.tar.gz
+          sudo mv kube-linter /usr/local/bin/
+      - name: Lint K8s Manifests
+        run: kube-linter lint k8s || true
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+
+      - name: Export cluster name & region
+        id: tfout
+        run: |
+          echo "CLUSTER_NAME=$(terraform output -raw cluster_name)" >> $GITHUB_OUTPUT
+          echo "REGION=${AWS_REGION}" >> $GITHUB_OUTPUT
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region ${{ steps.tfout.outputs.REGION }} --name ${{ steps.tfout.outputs.CLUSTER_NAME }}
+
+      - name: Deploy K8s Manifests
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deployment/nginx-web --timeout=180s
+
+      - name: Show Pods
+        run: kubectl get pods -o wide
