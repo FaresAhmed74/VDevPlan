@@ -7,7 +7,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket         = "terraform--fareseldesouky2002--remoteserver"
+    key            = "fares/dev/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-locks"
 
+
+  }
 }
 
 provider "aws" {
