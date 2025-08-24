@@ -26,11 +26,11 @@ resource "aws_security_group" "ec2" {
   vpc_id = var.vpc_id
 
   ingress {
-    description              = "HTTP from ALB"
-    from_port                = 80
-    to_port                  = 80
-    protocol                 = "tcp"
-    security_groups          = [aws_security_group.alb.id]
+    description     = "HTTP from ALB"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
   }
 
   ingress {
@@ -100,13 +100,13 @@ data "aws_ami" "ubuntu" {
 data "template_file" "userdata" {
   template = file("${path.module}/user_data.sh.tmpl")
   vars = {
-    name           = var.project_name
-    today          = timestamp()
-    region         = var.region
-    secret_arn     = var.secret_arn
-    rds_endpoint   = var.rds_endpoint
-    db_name        = "appdb"
-    bucket_name    = var.s3_bucket_name
+    name         = var.project_name
+    today        = timestamp()
+    region       = var.region
+    secret_arn   = var.secret_arn
+    rds_endpoint = var.rds_endpoint
+    db_name      = "appdb"
+    bucket_name  = var.s3_bucket_name
   }
 }
 resource "aws_key_pair" "eco_keypair" {
@@ -118,7 +118,7 @@ resource "aws_launch_template" "lt" {
   name_prefix   = "${var.project_name}-lt-"
   image_id      = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
-  key_name = aws_key_pair.eco_keypair.key_name
+  key_name      = aws_key_pair.eco_keypair.key_name
 
   iam_instance_profile {
     name = var.instance_profile
@@ -126,7 +126,7 @@ resource "aws_launch_template" "lt" {
 
   network_interfaces {
     associate_public_ip_address = true
-    security_groups = [aws_security_group.ec2.id]
+    security_groups             = [aws_security_group.ec2.id]
   }
 
   user_data = base64encode(data.template_file.userdata.rendered)

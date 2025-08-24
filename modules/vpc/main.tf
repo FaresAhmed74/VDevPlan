@@ -27,9 +27,9 @@ resource "aws_subnet" "public_subnet" {
   cidr_block              = each.value.cidr
   availability_zone       = each.value.az
   map_public_ip_on_launch = true
-  tags =  { 
+  tags = {
     Name = "${var.project_name}-public-${each.key}"
-     }
+  }
 }
 #   3) create the private subnet 
 resource "aws_subnet" "private_subnet" {
@@ -37,12 +37,12 @@ resource "aws_subnet" "private_subnet" {
     a = { az = var.azs[0], cidr = cidrsubnet(var.vpc_cidr, 8, 3) }
     b = { az = var.azs[1], cidr = cidrsubnet(var.vpc_cidr, 8, 4) }
   }
-  vpc_id                  = aws_vpc.ecommerce_vpc.id
-  cidr_block              = each.value.cidr
-  availability_zone       = each.value.az
-  tags =  { 
+  vpc_id            = aws_vpc.ecommerce_vpc.id
+  cidr_block        = each.value.cidr
+  availability_zone = each.value.az
+  tags = {
     Name = "${var.project_name}-private-${each.key}"
-     }
+  }
 }
 
 #   4) create the internet gateway
@@ -66,8 +66,8 @@ resource "aws_route_table" "public_rtb" {
 
 resource "aws_route_table_association" "public_subnet_association" {
   route_table_id = aws_route_table.public_rtb.id
-  for_each = aws_subnet.public_subnet
-  subnet_id = each.value.id
+  for_each       = aws_subnet.public_subnet
+  subnet_id      = each.value.id
 }
 
 #   6) create the Nat gatway 
@@ -75,12 +75,12 @@ resource "aws_eip" "eip" {
   domain     = "vpc"
   depends_on = [aws_internet_gateway.internet_gateway]
   tags = {
-    Name: "${var.project_name}eip"
+    Name : "${var.project_name}eip"
   }
 }
 resource "aws_nat_gateway" "nat_gateway" {
   allocation_id = aws_eip.eip.id
-  subnet_id = aws_subnet.public_subnet["a"].id
+  subnet_id     = aws_subnet.public_subnet["a"].id
   tags = {
     Name = "${var.project_name} nat"
   }
@@ -98,7 +98,7 @@ resource "aws_route_table" "eco_private_rtb" {
 
 resource "aws_route_table_association" "private_subnet_association" {
   route_table_id = aws_route_table.eco_private_rtb.id
-  for_each = aws_subnet.private_subnet
-  subnet_id = each.value.id
- 
+  for_each       = aws_subnet.private_subnet
+  subnet_id      = each.value.id
+
 }

@@ -16,7 +16,7 @@ resource "aws_iam_role" "ec2_role" {
 }
 
 resource "aws_iam_policy" "s3_rw" {
-  name   = "${var.project_name}-s3-rw"
+  name = "${var.project_name}-s3-rw"
   policy = templatefile("${path.module}/policies/s3-policy.json", {
     bucket_arn = var.bucket_arn
   })

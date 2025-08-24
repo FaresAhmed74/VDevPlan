@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "uploads_bucket" {
   bucket = var.bucket_name
-  tags   =  { Name = "${var.project_name}-uploads" }
+  tags   = { Name = "${var.project_name}-uploads" }
 }
 
 // to set a backup
